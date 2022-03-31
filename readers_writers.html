@@ -15,16 +15,33 @@
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
+            height: 300px;
+            background-color: grey;
+            gap: 0.5em;
+        }
+
+        .buttons-container{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5em;
+        }
+
+        .reader{
+            width: 70px;
+            height: 70px;
+            background-color: green;
+            font-weight: bold;
+        }
+
+        .writer{
+            width: 70px;
+            height: 70px;
+            background-color: red;
+            font-weight: bold;
         }
     </style>
-    <script>
-        window.onload = () => {
-            const readers = []
-            const writers = []
-
-
-        }
-    </script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -76,12 +93,53 @@
             </div>
         </div>
     </nav>
-    <div class="mt-5 db-flex">
+    <div class="mt-5 mb-5 db-flex">
         
     </div>
     <div class="buttons-container">
-        <button type="button" class="btn">Reader</button>
-        <button type="button" class="btn">Writer</button>
+        <button type="button" class="btn-success" id="reader-create-btn">CreateReader</button>
+        <button type="button" class="btn-danger" id="writer-create-btn">CreateWriter</button>
+        <button type="button" class="btn-danger" id="reader-destroy-btn">DestroyReader</button>
+        <button type="button" class="btn-success" id="writer-destroy-btn">DestroyWriter</button>
     </div>
 </body>
+<script>
+    const readers = []
+    const writers = []
+
+    const readerCreateBtn = document.querySelector('#reader-create-btn')
+    const writerCreateBtn = document.querySelector('#writer-create-btn')
+    const readerDestroyBtn = document.querySelector('#reader-destroy-btn')
+    const writerDestroyBtn = document.querySelector('#writer-destroy-btn')
+
+    const dbFlex = document.querySelector('.db-flex')
+
+    readerCreateBtn.addEventListener('click', await createReader)
+
+    writerCreateBtn.addEventListener("click", await createWriter)
+
+    readerDestroyBtn.addEventListener('click', () => {
+        document.querySelector(".reader").remove()
+        readers.pop()
+    })
+
+    writerDestroyBtn.addEventListener('click', () => {
+        document.querySelector(".writer").remove()
+        writers.pop()
+    })
+
+    async function createReader()
+    {
+        while(writers.length);
+        readers.push(0)
+        dbFlex.innerHTML += `<div class="reader">Reader</div>`
+    }
+
+    async function createWriter()
+    {
+        while(writers.length || readers.length);
+        writers.push(0)
+        dbFlex.innerHTML += `<div class="writer">Writer</div>`
+    }
+</script>
 </html>
