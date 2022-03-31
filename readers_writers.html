@@ -107,27 +107,7 @@
     const readers = []
     const writers = []
 
-    const readerCreateBtn = document.querySelector('#reader-create-btn')
-    const writerCreateBtn = document.querySelector('#writer-create-btn')
-    const readerDestroyBtn = document.querySelector('#reader-destroy-btn')
-    const writerDestroyBtn = document.querySelector('#writer-destroy-btn')
-
-    const dbFlex = document.querySelector('.db-flex')
-
-    readerCreateBtn.addEventListener('click', await createReader)
-
-    writerCreateBtn.addEventListener("click", await createWriter)
-
-    readerDestroyBtn.addEventListener('click', () => {
-        document.querySelector(".reader").remove()
-        readers.pop()
-    })
-
-    writerDestroyBtn.addEventListener('click', () => {
-        document.querySelector(".writer").remove()
-        writers.pop()
-    })
-
+    
     async function createReader()
     {
         while(writers.length);
@@ -140,6 +120,29 @@
         while(writers.length || readers.length);
         writers.push(0)
         dbFlex.innerHTML += `<div class="writer">Writer</div>`
+    }
+
+    async function main(){
+        const readerCreateBtn = document.querySelector('#reader-create-btn')
+        const writerCreateBtn = document.querySelector('#writer-create-btn')
+        const readerDestroyBtn = document.querySelector('#reader-destroy-btn')
+        const writerDestroyBtn = document.querySelector('#writer-destroy-btn')
+
+        const dbFlex = document.querySelector('.db-flex')
+
+        readerCreateBtn.addEventListener('click', await createReader)
+
+        writerCreateBtn.addEventListener("click", await createWriter)
+
+        readerDestroyBtn.addEventListener('click', () => {
+            document.querySelector(".reader").remove()
+            readers.pop()
+        })
+
+        writerDestroyBtn.addEventListener('click', () => {
+            document.querySelector(".writer").remove()
+            writers.pop()
+        })
     }
 </script>
 </html>
