@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- This is for first fit -->
+    <!-- This is for best fit -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -95,26 +95,38 @@
 
                     let i = 0
                     let allocated = false
+                    let bestHoleIndex = -1
+                    let minDiff = Infinity
+                    let index = 0
 
                     for(const holeSize of holeSizeList)
                     {
                         if(holeSize >= memoryRequestSize)
                         {   
                             allocated = true
-                            holeSizeList[i] -= memoryRequestSize
-                            resultContainer.innerHTML += `<p>Process${numMemoryRequests} has been allocated ${memoryRequestSize}KB of memory successfully.</p>`
-                            break;
+                            
+                            if(holeSize - memoryRequestSize < minDiff)
+                            {
+                                minDiff = holeSize - memoryRequestSize
+                                bestHoleIndex = index
+                            }
                         }
 
-                        i++
+                        index++
                     }
 
-                    if(!allocated)
+                    if(allocated)
+                    {
+                        holeSizeList[bestHoleIndex] -= memoryRequestSize
+                        resultContainer.innerHTML += `<p>Process${numMemoryRequests} has been allocated ${memoryRequestSize}KB of memory successfully.</p>`
+                        i++
+                    }
+                    else
                     {
                         resultContainer.innerHTML += `<p>Process${numMemoryRequests} could not be allocated ${memoryRequestSize}KB of memory.</p>`
                     }
 
-                    resultContainer += `<b>Remaining hole sizes are: </b>`
+                    resultContainer.innerHTML += `<b>Remaining hole sizes are: </b>`
                     resultContainer.innerHTML += `<p>${holeSizeList.join(" ")}</p>`
                 }
             })

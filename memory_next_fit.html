@@ -95,26 +95,27 @@
 
                     let i = 0
                     let allocated = false
-
-                    for(const holeSize of holeSizeList)
+                    let startIndex = 0
+                    
+                    for(let index = startIndex; ;index = (index+1)%(holeSizeList.length))
                     {
-                        if(holeSize >= memoryRequestSize)
-                        {   
+                        if(holeSizeList[index] <= memoryRequestSize)
+                        {
                             allocated = true
-                            holeSizeList[i] -= memoryRequestSize
+                            holeSizeList[index] -= memoryRequestSize
                             resultContainer.innerHTML += `<p>Process${numMemoryRequests} has been allocated ${memoryRequestSize}KB of memory successfully.</p>`
-                            break;
+                            break
                         }
-
-                        i++
                     }
+                    
+                    i++
 
                     if(!allocated)
                     {
                         resultContainer.innerHTML += `<p>Process${numMemoryRequests} could not be allocated ${memoryRequestSize}KB of memory.</p>`
                     }
-
-                    resultContainer += `<b>Remaining hole sizes are: </b>`
+                
+                    resultContainer.innerHTML += `<b>Remaining hole sizes are: </b>`
                     resultContainer.innerHTML += `<p>${holeSizeList.join(" ")}</p>`
                 }
             })
