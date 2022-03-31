@@ -106,7 +106,12 @@
 <script>
     const readers = []
     const writers = []
+    const readerCreateBtn = document.querySelector('#reader-create-btn')
+    const writerCreateBtn = document.querySelector('#writer-create-btn')
+    const readerDestroyBtn = document.querySelector('#reader-destroy-btn')
+    const writerDestroyBtn = document.querySelector('#writer-destroy-btn')
 
+    const dbFlex = document.querySelector('.db-flex')
     
     async function createReader()
     {
@@ -123,12 +128,7 @@
     }
 
     async function main(){
-        const readerCreateBtn = document.querySelector('#reader-create-btn')
-        const writerCreateBtn = document.querySelector('#writer-create-btn')
-        const readerDestroyBtn = document.querySelector('#reader-destroy-btn')
-        const writerDestroyBtn = document.querySelector('#writer-destroy-btn')
-
-        const dbFlex = document.querySelector('.db-flex')
+        
 
         readerCreateBtn.addEventListener('click', await createReader)
 
