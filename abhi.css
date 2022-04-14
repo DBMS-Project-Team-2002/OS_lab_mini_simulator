@@ -1,0 +1,66 @@
+fresh th {
+    background: linear-gradient(WhiteSmoke, lightgray);
+    text-align: left;
+    border: 1px solid black;
+    height: 400 px;
+}
+fresh td {
+    border: 1px solid black;
+    border-bottom: 0;
+    /*border-right: 0;*/
+    height: 20px;
+    text-align: left;
+}
+
+div th, div td {
+    border: 1px solid black;
+    text-align: center;
+}
+table {
+    display: inline;
+    border-collapse: collapse;
+}
+input {
+    text-align: center;
+}
+#curtain {
+  background-color: white;
+}
+*{    background-color: #fff;
+}
+
+h2{
+font-size: 20px;
+color: #ff0031;
+}
+
+h1{
+font-size: 55px;
+color:    #933648;
+}
+
+h4{
+color:    #933648;
+font-size: 25px;
+
+}
+.container {
+width: 1100px;
+margin-left: auto;
+margin-right: auto;
+font-family: cursive;
+font-size: 17px;
+text-align: center
+
+}
+
+.about{
+color: #7c7a7b;
+font-size: 35px;
+}
+
+.zaz{ color:    #933648;
+    color: grey;
+font-size: 30px;
+
+}
