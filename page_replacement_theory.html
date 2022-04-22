@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Replacement</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 3rem;
+        background-color: #f8f9fa;
+    }
+
+    .onlycontentinner {
+        margin: 20px;
+    }
+</style>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">OS Simulator</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">System Calls</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Process Scheduling</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Memory Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">File Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Banker's Algorithm</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Process Syncronization Problems
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="producer_consumer.html">Producer Consumer Problem</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Readers Writers Problem</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Dining Philosophers Problem</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="onlycontentinner">
+        <div id="city">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <h1 class="h1">Page Replacement Algorithms</h1>
+                            <p>The page replacement algorithm decides which memory page is to be replaced. The process
+                                of replacement is sometimes called swap out or write to disk. Page replacement is done
+                                when the requested page is not found in the main memory (page fault).</p>
+                            <br>
+                            <img src="https://static.javatpoint.com/operating-system/images/os-page-replacement-algorithms.png"
+                                alt="OS Page Replacement Algorithms">
+                            <br><br>
+                            <p>There are two main aspects of virtual memory, Frame allocation and Page Replacement. It
+                                is very important to have the optimal frame allocation and page replacement algorithm.
+                                Frame allocation is all about how many frames are to be allocated to the process while
+                                the page replacement is all about determining the page number which needs to be replaced
+                                in order to make space for the requested page.</p>
+                            <p>Page Fault – A page fault happens when a running program accesses a memory page that is
+                                mapped into the virtual address space but not loaded in physical memory.
+
+                                Since actual physical memory is much smaller than virtual memory, page faults happen. In
+                                case of a page fault, Operating System might have to replace one of the existing pages
+                                with the newly needed page. Different page replacement algorithms suggest different ways
+                                to decide which page to replace. The target for all algorithms is to reduce the number
+                                of page faults. </p>
+                            <h3 class="h3">What If the algorithm is not optimal?</h3>
+                            <p>1. if the number of frames which are allocated to a process is not sufficient or accurate
+                                then there can be a problem of thrashing. Due to the lack of frames, most of the pages
+                                will be residing in the main memory and therefore more page faults will occur.</p>
+                            <p>However, if OS allocates more frames to the process then there can be internal
+                                fragmentation.
+
+        </div>
+        </p>
+        <p>2. If the page replacement algorithm is not optimal then there will also be the problem
+            of thrashing. If the number of pages that are replaced by the requested pages will be
+            referred in the near future then there will be more number of swap-in and swap-out and
+            therefore the OS has to perform more replacements then usual which causes performance
+            deficiency.</p>
+        <p>Therefore, the task of an optimal page replacement algorithm is to choose the page which
+            can limit the thrashing.</p>
+        <h3 class="h3">Types of Page Replacement Algorithms</h3>
+        <p>There are various page replacement algorithms. Each algorithm has a different method by
+            which the pages can be replaced.</p>
+        <ol class="points">
+            <li><strong>Optimal Page Replacement algorithm →</strong> this algorithms replaces the
+                page which will not be referred for so long in future. Although it can not be
+                practically implementable but it can be used as a benchmark. Other algorithms are
+                compared to this in terms of optimality.</li><br>
+            <li><strong>Least Recently used (LRU) Page Replacement algorithm →</strong> this algorithm
+                replaces the page which has not been referred for a long time. This algorithm is
+                just opposite to the optimal page replacement algorithm. In this, we look at the
+                past instead of staring at future. </li><br>
+            <li><strong>First In First Out (FIFO) Page Replacement algorithm →</strong> This is the simplest page
+                replacement algorithm. In this algorithm, the
+                operating system keeps track of all pages in the memory in a queue, the oldest page is in the front of
+                the queue. When a page needs to be replaced page in the front of the queue is selected for removal.
+                <br><br>
+                Belady’s anomaly – Belady’s anomaly proves that it is possible to have more page faults when increasing
+                the number of page frames while using the First in First Out (FIFO) page replacement algorithm.
+            </li>
+        </ol>
+        <input type="button" class="btn btn-warning" onclick="location.href='page_replacement.html';"
+            value="VISUALIZER" />
+    </div>
+</body>
+
+</html>

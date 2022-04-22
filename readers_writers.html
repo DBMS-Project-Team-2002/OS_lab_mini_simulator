@@ -106,6 +106,9 @@
 <script>
     const readers = []
     const writers = []
+    let t = 0
+    const readerRequests = []
+    const writerRequests = []
     const readerCreateBtn = document.querySelector('#reader-create-btn')
     const writerCreateBtn = document.querySelector('#writer-create-btn')
     const readerDestroyBtn = document.querySelector('#reader-destroy-btn')
@@ -113,38 +116,91 @@
 
     const dbFlex = document.querySelector('.db-flex')
     
-    async function createReader()
+    function createReader()
     {
-        while(writers.length);
-        readers.push(0)
-        dbFlex.innerHTML += `<div class="reader">Reader</div>`
+        if(writers.length)
+        {
+            readerRequests.push(t++)
+        }
+        else
+        {
+            readers.push(0)
+            dbFlex.innerHTML += `<div class="reader">Reader</div>`
+        }
     }
 
-    async function createWriter()
+    function createWriter()
     {
-        while(writers.length || readers.length);
-        writers.push(0)
-        dbFlex.innerHTML += `<div class="writer">Writer</div>`
+        if(writers.length || readers.length)
+        {
+            writerRequests.push(t++)
+        }
+        else
+        {
+            writers.push(0)
+            dbFlex.innerHTML += `<div class="writer">Writer</div>`
+        }
     }
 
-    async function main(){
-        
+        readerCreateBtn.addEventListener('click', createReader)
 
-        readerCreateBtn.addEventListener('click', await createReader)
-
-        writerCreateBtn.addEventListener("click", await createWriter)
+        writerCreateBtn.addEventListener("click", createWriter)
 
         readerDestroyBtn.addEventListener('click', () => {
             document.querySelector(".reader").remove()
             readers.pop()
+
+            if(!writers.length)
+            {   
+                if(!readers.length)
+                {
+                    writerRequests.shift()
+                    writers.push(0)
+                    dbFlex.innerHTML += `<div class="writer">Writer</div>`
+                }
+                else
+                {
+                    while(readerRequests.length)
+                    {
+                        readerRequests.shift()
+                        readers.push(0)
+                        dbFlex.innerHTML += `<div class="reader">Reader</div>`
+                    }
+                }
+            }
         })
 
         writerDestroyBtn.addEventListener('click', () => {
             document.querySelector(".writer").remove()
             writers.pop()
-        })
-    }
 
-    main()
+            if(!writers.length)
+            {   
+                if(!readers.length)
+                {
+                    if(writerRequests.length)
+                    {
+                        writerRequests.shift()
+                        writers.push(0)
+                        dbFlex.innerHTML += `<div class="writer">Writer</div>`
+                    }
+                    else if(readerRequests.length)
+                    {
+                        readerRequests.shift()
+                        readers.push(0)
+                        dbFlex.innerHTML += `<div class="reader">Reader</div>`
+                    }
+                }
+                else
+                {
+                    if(readerRequests.length)
+                    {
+                        readerRequests.shift()
+                        readers.push(0)
+                        dbFlex.innerHTML += `<div class="reader">Reader</div>`
+                    }
+                }
+            }
+        })
 </script>
 </html>
