@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <style>
+    .card {
+
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(246, 242, 242, 0.922);
+  transition: 0.3s;
+  width: 60%;
+  text-align: center;
+  margin: auto;
+  background-color: rgba(22, 9, 157, 0.587);
+  background-position: center;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(243, 239, 239, 0.91);
+}
+        main {
+            display: flex;
+            align-items: center;
+            margin-left: 1rem;
+        }
+
+        .image-container img {
+            width: 250px;
+        }
+        .error{
+            color: red;
+            font-size: small;
+            
+            visibility: hidden;
+        }
+        td, th{
+            border: 1px solid black;
+        }
+
+        #inputs{
+            text-align: center;
+            margin-top: 50px;
+        }
+       
+        input[type="button"]{
+            margin: 10px;
+        }
+
+        .btn{
+            background-color: aquamarine;
+            color: black;
+            padding: 10px;
+        }
+        body{
+            background-image: url('Polygon_Luminary.svg');
+            height: 100%;
+            
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        #particles-js {
+        background:#0E2A47;
+        height: 20vh;
+        }
+        
+        .colors{
+            color: aliceblue;
+        }
+        
+
+    </style>
+    
+    <title>Paging</title>
+    
+   
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../index.html">OS Simulator</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link active" aria-current="page" href="Paging_theory.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">System Calls</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Process Scheduling</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Memory Management</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" ole="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">File Management</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="page_replacement_theory.html">Page Replacement</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Banker's Algorithm</a>
+    
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Process Syncronization Problems
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="producer_consumer.html">Producer Consumer Problem</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Readers Writers Problem</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Dining Philosophers Problem</a></li>
+                            
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Paging</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="part">
+        <h1><center  class="colors"> Paging</center></h1>
+    </div>
+    
+
+    <div class="card" >
+
+    <form action="#">
+    <div id="inputs"  class="colors">
+        
+        Enter the number of pages: <br>
+        <div>
+            <input type="number" id="no_of_pages">
+        </div>
+        <div class="error" id="error1">
+            *Required
+        </div>
+        <br>
+        
+        Enter the number of frames: <br>
+        <div>
+            <input type="number" id="no_of_frames">
+        </div>
+        <div class="error" id="error3">
+            *Required
+        </div>
+        <br>
+       
+        Enter the size of a page/frame: <br>
+        <div>
+            <input type="number" id="size_of_page">
+        </div>
+        <div class="error" id="error2">
+            *Required
+        </div>
+        <br>
+
+        
+
+        Enter the frame number allotted for each page:
+        <div>
+            <input type="text" id="frame_string">
+        </div>
+        <div class="error" id="error4">
+            *Required
+        </div>
+        <br>
+        Enter the logical address:
+        <div>
+            <input type="number" id="logical_address">
+        </div>
+        <div class="error" id="error5">
+            *Required
+        </div>
+
+        </div>
+        <br>
+        </div>
+        
+        <center style="display: flex; justify-content: center">
+        
+        <input class="btn" type="button" onclick="solve()" id="run" value="Process">
+
+        <input class="btn" type="button" value="Delete A Row" onclick="document.getElementById('Table').deleteRow(1);">
+
+        <input class="btn" type="button" value="reset" onclick="reset()">
+        </center>
+<br>
+
+</form>
+        <div class="table" style="width: 60%; max-height: 15em; overflow-y: auto; margin: auto">            
+                <table id="Table" class="colors" border="2" style="text-align: center; width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>No. of pages </th>
+                            <th>Size of a page/frame</th>
+                            <th>Number of frames</th>
+                            <th>Frame numbers allotted</th>
+                            <th>Logical address</th>
+                            <th>&nbsp; &nbsp; <u> Physical Address </u>&nbsp; &nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       
+                    </tbody>
+                </table>
+        </div>
+
+<script defer>
+    var solve = function () {
+        console.log("here");
+        var no_pages = parseInt(document.getElementById("no_of_pages").value);
+        var size = parseInt(document.getElementById("size_of_page").value);
+        var no_frames = parseInt(document.getElementById("no_of_frames").value);
+        var frame_string = document.getElementById("frame_string").value;
+        var log_add = parseInt(document.getElementById("logical_address").value);
+        var arr = new Array();
+        arr = frame_string.split(' ').map(Number);
+        for (i = 1; i <= 5; i++)
+            document.getElementById("error" + i).style.visibility = "hidden";
+        var err = "";
+        if (isNaN(no_pages)) err += 1;
+        if (isNaN(size)) err += 2;
+        if (isNaN(no_frames)) err += 3;
+        if (frame_string === "") err += 4;
+        if (isNaN(log_add)) err += 5;
+
+        if (err != "") {
+            for (i = 0; i < err.length; i++)
+                document.getElementById("error" + err[i]).style.visibility = "visible";
+            return;
+        }
+        if (arr.length != no_pages) {
+            alert("number of pages and page table rows does not match!!!");
+            return;
+        }
+        if (no_pages > no_frames) {
+            alert("no. of pages are greater than the no. of frames!!!");
+            return;
+        }
+        var page = Math.floor(log_add / size);
+        var offset = log_add % size;
+        var table = document.getElementById("Table");
+        var row = table.insertRow(1);
+        var cell0 = row.insertCell(0);
+        cell0.innerHTML = no_pages;
+        var cell1 = row.insertCell(1);
+        cell1.innerHTML = size;
+        var cell2 = row.insertCell(2);
+        cell2.innerHTML = no_frames;
+        var cell3 = row.insertCell(3);
+        cell3.innerHTML = frame_string;
+        var cell4 = row.insertCell(4);
+        cell4.innerHTML = log_add;
+        var cell5 = row.insertCell(5);
+
+        if (page >= no_pages || arr[page] == -1) {
+            cell5.innerHTML = "<strong>Address Not Found!!!</strong>";
+            cell5.bgColor="red";
+        }
+        else{ cell5.innerHTML = ((arr[page] * size) + offset);
+        cell5.bgColor="green";}
+    }
+</script>
+
+</body>
+
+</html>
+
+
+
