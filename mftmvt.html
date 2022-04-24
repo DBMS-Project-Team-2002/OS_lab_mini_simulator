@@ -1,90 +1,369 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>MFT MVT</title>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-       
-    </head>
-    <body>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">OS Simulator</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item active">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">System Calls</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Process Scheduling</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Memory Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">File Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Banker's Algorithm</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Process Syncronization Problems
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="producer_consumer.html">Producer Consumer Problem</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Readers Writers Problem</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Dining Philosophers Problem</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-        <br>
-        <div class="container">
-            <div class="jumbotron">
-                <h1 class="display-3">MFT</h1>
-                <p class="lead">Multiprogramming with Fixed Tasks</p>
-                <hr class="my-4">
-                <p>MFT (Multi programming with fixed number of task) or fixed partitioning scheme: At the time of Operating System installation, MFT scheme will be partitioned the memory into fixed sized blocks.</p>
-                <p class="lead">
-                  <a class="btn btn-secondary" href="https://www.javatpoint.com/os-fixed-partitioning" role="button">Click here to learn more about MFT</a>
-                  <br><br><a class="btn btn-secondary" href="mft.html" role="button">Click here to simulate MFT</a>
-                </p>
-            </div>
-            <br>
-        </div>
-        <div class="container">
-            <div class="jumbotron">
-                <h1 class="display-3">MVT</h1>
-                <p class="lead">Multiprogramming with Varialbe Tasks</p>
-                <hr class="my-4">
-                <p>MVT (Multiprogramming with a Variable number of Tasks) is the memory management technique in which each job gets just the amount of memory it needs. That is, the partitioning of memory is dynamic and changes as jobs enter and leave the system.</p>
-                <p class="lead">
-                  <a class="btn btn-secondary" href="https://www.javatpoint.com/os-dynamic-partitioning" role="button">Click here to learn more about MVT</a>
-                  <br><br><a class="btn btn-secondary" href="mvt.html" role="button">Click here to simulate MVT</a>
+<html lang="en">
 
-                </p>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>OS Simulator</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet">
+
+    <!-- =======================================================
+  * Template Name: BizLand - v3.7.0
+  * Template URL: https://bootstrapmade.com/bizland-bootstrap-business-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+    <!-- ======= Top Bar ======= -->
+    <section id="topbar" class="d-flex align-items-center">
+        <div class="container d-flex justify-content-center justify-content-md-between">
+            <div class="contact-info d-flex align-items-center">
+                <i class="bi bi-envelope d-flex align-items-center"><a
+                        href="mailto:contact@example.com">csteam2024batch@nitk.edu.in</a></i>
+                <i class="bi bi-phone d-flex align-items-center ms-4"><span></span></i>
             </div>
-</div>
+            <div class="social-links d-none d-md-flex align-items-center">
+                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="d-flex align-items-center">
+        <div class="container d-flex align-items-center justify-content-between">
+
+            <h1 class="logo">OS Simulator<span>.</span></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <a href="home.html" class="logo"><img src="assets/img/logo.png" alt=""></a>
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+                    <li><a class="nav-link scrollto" href="#about">About</a></li>
+                    <li><a class="nav-link scrollto" href="#services">All Topics</a></li>
+                    <li><a class="nav-link scrollto " href="#faq">F.A.Q</a></li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
+
+        </div>
+    </header><!-- End Header -->
+
+    <!-- ======= Hero Section ======= -->
+    <section id="hero" class="d-flex align-items-center">
+        <div class="container" data-aos="zoom-out" data-aos-delay="100">
+            <h1>Welcome to <span>Memory Management</span></h1>
+            <h2><b>Project done under the guidance of Shashidhar Sir</b></h2>
+            <div class="d-flex">
+                <a href="#about" class="btn-get-started scrollto">Get Started</a>
+                <!-- <a href="https://www.youtube.com/watch?v=6bXaiR2aAxA" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Watch Video</span></a> -->
+            </div>
+        </div>
+    </section><!-- End Hero -->
+
+    <main id="main">
+
+        <!-- ======= Featured Services Section ======= -->
+        
+
+        <!-- ======= About Section ======= -->
+        <section id="about" class="about section-bg">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-title">
+                    <h1>Memory Management</h1>
+                    <!-- <h3>Know <span>About topic</span></h3>
+                    <p>Operating System</p> -->
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
+                        <img src="mft.png" width="330" class="img-fluid" alt="">
+                    </div>
+                    <div class="col-lg-6 pt-4 pt-lg-0 content d-flex flex-column justify-content-center"
+                        data-aos="fade-up" data-aos-delay="100">
+                        <h3>What is MFT</h3>
+                        <p>The earliest and one of the simplest technique which can be used to load more than one processes into the main memory is Fixed partitioning or Contiguous memory allocation.</p>
+            <p>In this technique, the main memory is divided into partitions of equal or different sizes. The operating system always resides in the first partition while the other partitions can be used to store user processes. The memory is assigned to the processes in contiguous way.            </p>
+            <p>In fixed partitioning,
+                the partitions cannot overlap.
+                A process must be contiguously present in a partition for the execution.</p>
+                <p class="lead">
+                    <a class="btn btn-secondary" href="https://www.javatpoint.com/os-fixed-partitioning" role="button">Click here to learn more about MFT</a>
+                    <a class="btn btn-secondary" href="mft.html" role="button">Click here to simulate MFT</a>
+                  </p>                    </div>
+                </div><br> <br>
+                <div class="row">
+                    <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
+                        <img src="mvt.png" width="330" class="img-fluid" alt="">
+                    </div>
+                    <div class="col-lg-6 pt-4 pt-lg-0 content d-flex flex-column justify-content-center"
+                        data-aos="fade-up" data-aos-delay="100">
+                        <h3>What is MVT?</h3>
+                        <p>Dynamic partitioning tries to overcome the problems caused by fixed partitioning. In this technique, the partition size is not declared initially. It is declared at the time of process loading.</p></div>
+                        <p style="margin-left:5em">The first partition is reserved for the operating system. The remaining space is divided into parts. The size of each partition will be equal to the size of the process. The partition size varies according to the need of the process so that the internal fragmentation can be avoided.</p>
+                        <p style="margin-left:5em">Given the fact that the partitions in dynamic partitioning are created according to the need of the process, It is clear that there will not be any internal fragmentation because there will not be any unused remaining space in the partition.</p>
+                        <p class="lead">
+                            <a class="btn btn-secondary" href="https://www.javatpoint.com/os-fixed-partitioning" role="button">Click here to learn more about MFT</a>
+                            <a class="btn btn-secondary" href="mft.html" role="button">Click here to simulate MFT</a>
+                          </p>
+                    </div>
+            </div>
+        </section><!-- End About Section -->
+
+
+        <!-- ======= Services Section ======= -->
+        <section id="services" class="services">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-title">
+                    <h2>Topics covered</h2>
+                    <h3>Check our <span>Topics</span></h3>
+                    <p>These are the topics along with their Simulations</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="icon-box">
+                            <div class="icon"><i class="bx bxl-dribbble"></i></div>
+                            <h4><a href="">Bankers Algorithm</a></h4>
+                            <p>The banker's algorithm is a resource allocation and deadlock avoidance algorithm that tests for safety by simulating the allocation for predetermined maximum possible amounts of all resources, then makes an “s-state” check to test for possible activities, before deciding whether allocation should be allowed to continue </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in"
+                        data-aos-delay="200">
+                        <div class="icon-box">
+                            <div class="icon"><i class="bx bx-file"></i></div>
+                            <h4><a href="">Disk Scheduling</a></h4>
+                            <p>Disk scheduling is done by operating systems to schedule I/O requests arriving for the disk. Disk scheduling is also known as I/O scheduling. Disk scheduling is important because: Multiple I/O requests may arrive by different processes and only one I/O request can be served at a time by the disk controller.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0" data-aos="zoom-in"
+                        data-aos-delay="300">
+                        <div class="icon-box">
+                            <div class="icon"><i class="bx bx-tachometer"></i></div>
+                            <h4><a href="">MVT and MFT</a></h4>
+                            <p>MFT and MVT are different memory management techniques in operating systems. MFT or fixed partitioning scheme. 1. The OS is partitioned into fixed sized blocks at the time of installation. For example, there can be total 4 partitions and the size of each block can be 4KB</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0" data-aos="zoom-in"
+                        data-aos-delay="300">
+                        <div class="icon-box">
+                            <div class="icon"><i class="bx bx-tachometer"></i></div>
+                            <h4><a href="memory_fit_home.html">Memory Fit Algorithms</a></h4>
+                            <p>Memory Fit Algorithms are used to fill holes in main main memory efficiently.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="icon-box">
+                            <div class="icon"><i class="bx bxl-dribbble"></i></div>
+                            <h4><a href="producer_consumer_home.html">Producer Consumer Problem</a></h4>
+                            <p>Producer-Consumer Problem is also known as bounded buffer problem. The Producer-Consumer Problem is one of the classic problems of synchronization.
+                                There is a buffer of N slots and each slot is capable of storing one unit of data.
+                                There are two processes running, i.e. Producer and Consumer, which are currently operated in the buffer.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in"
+                        data-aos-delay="200">
+                        <div class="icon-box">
+                            <div class="icon"><i class="bx bx-file"></i></div>
+                            <h4><a href="readers_writers_home.html">Readers Writers Problem</a></h4>
+                            <p>In computer science, the readers–writers problems are examples of a common computing problem in concurrency. There are at least three variations of the problems, which deal with situations in which many concurrent threads of execution try to access the same shared resource at one time</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!-- End Services Section -->
+
+        <!-- ======= Testimonials Section ======= -->
+
+        <!-- ======= Frequently Asked Questions Section ======= -->
+        <section id="faq" class="faq section-bg">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-title">
+                    <h2>F.A.Q</h2>
+                    <h3>Frequently Asked <span>Questions</span></h3>
+                    <p>We will be updating the rest of the questions soon</p>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-xl-10">
+                        <ul class="faq-list">
+
+                            <li>
+                                <div data-bs-toggle="collapse" class="collapsed question" href="#faq1">What is bootstrap
+                                    program in Operating System? <i class="bi bi-chevron-down icon-show"></i><i
+                                        class="bi bi-chevron-up icon-close"></i></div>
+                                <div id="faq1" class="collapse" data-bs-parent=".faq-list">
+                                    <p>
+                                        It is generally a program that initializes OS during startup i.e., first code
+                                        that is executed whenever computer system startups. OS is loaded through a
+                                        bootstrapping process or program commonly known as booting. Overall OS only
+                                        depends on the bootstrap program to perform and work correctly. It is fully
+                                        stored in boot blocks at a fixed location on the disk. It also locates the
+                                        kernel and loads it into the main memory after which the program starts its
+                                        execution.
+                                </div>
+                            </li>
+
+                            <li>
+                                <div data-bs-toggle="collapse" href="#faq2" class="collapsed question">What is IPC? what
+                                    are different IPC Mechanisms? <i class="bi bi-chevron-down icon-show"></i><i
+                                        class="bi bi-chevron-up icon-close"></i></div>
+                                <div id="faq2" class="collapse" data-bs-parent=".faq-list">
+                                    <p>
+                                        IPC (Interprocess Communication) is a mechanism that requires the use of
+                                        resources like a memory that is shared between processes or threads. With IPC,
+                                        OS allows different processes to communicate with each other. It is simply used
+                                        for exchanging data between multiple threads in one or more programs or
+                                        processes. In this mechanism, different processes can communicate with each
+                                        other with the approval of the OS.
+
+                                        Different IPC Mechanisms:
+
+                                        1.Pipes
+                                        2.Message Queuing
+                                        3.Semaphores
+                                        4.Socket
+                                        5.Shared Memory
+                                        6.Signals
+                                </div>
+                            </li>
+
+                            <li>
+                                <div data-bs-toggle="collapse" href="#faq3" class="collapsed question">what do you mean
+                                    by Overlay in OS?<i class="bi bi-chevron-down icon-show"></i><i
+                                        class="bi bi-chevron-up icon-close"></i></div>
+                                <div id="faq3" class="collapse" data-bs-parent=".faq-list">
+                                    <p>
+                                        Overlays is basically a programming method that divides processes into pieces so
+                                        that instructions that are important and need can be saved in memory
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section><!-- End Frequently Asked Questions Section -->
+    </main><!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+
+        <div class="footer-newsletter">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <h4>Join Ous For making better Tomorrow </h4>
+                        <p>Lets build an advanced Operating System</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6 footer-contact">
+                        <h3>NITK CS Students 2024 Batch<span>.</span></h3>
+                        <p>
+                            This project is succesfully completed under the valuable guidance of Shashidhar Sir<br>
+                            <strong>Phone:</strong> +91 999999999<br>
+                            <strong>Email:</strong> csteam2024batch@nitk.edu.in<br>
+                        </p>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Useful Links</h4>
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#about">About Operating System</a></li>
+                            <li><a href="#services">All Topics</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Project done by</h4>
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i>191CS248 SHASHANK J BENNEHALLI</li>
+                            <li><i class="bx bx-chevron-right"></i>201CS202 ABHISHEK KUMAR SINGH</li>
+                            <li><i class="bx bx-chevron-right"></i>201CS203 ADITHYA M S</li>
+                            <li><i class="bx bx-chevron-right"></i>201CS204 AJAY VIKRAM P</li>
+                            <li><i class="bx bx-chevron-right"></i>201CS205 AKASH PRASAD</li>
+                            <li><i class="bx bx-chevron-right"></i>201CS206 AMAN SINGH HADA</li>
+                            <li><i class="bx bx-chevron-right"></i>201CS207 AMOGH UMESH</li>
+                            <li><i class="bx bx-chevron-right"></i>201CS208 ASHISH BHARATH</li>
+                            <li><i class="bx bx-chevron-right"></i>201CS209 ASHWIN SAM JOSEPH</li>
+                            <li><i class="bx bx-chevron-right"></i>201CS210 ATTADA RAMPRASAD</li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Our Social Networks</h4>
+                        <p>These are our social webpages</p>
+                        <div class="social-links mt-3">
+                            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                            <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container py-4">
+            <div class="copyright">
+                &copy; Copyright <strong><span>Team 201CS201-201CS210 CSE NITK </span></strong>. All Rights Reserved
+    </footer><!-- End Footer -->
+
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/purecounter/purecounter.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
+
 </body>
+
 </html>
