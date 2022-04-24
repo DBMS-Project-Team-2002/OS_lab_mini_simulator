@@ -44,55 +44,7 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">OS Simulator</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">System Calls</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Process Scheduling</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Memory Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">File Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Banker's Algorithm</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Process Syncronization Problems
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="producer_consumer.html">Producer Consumer Problem</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Readers Writers Problem</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Dining Philosophers Problem</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <center><h1 class="mt-5 text-decoration-underline">Readers Writers Problem Simulation</h1></center>
     <div class="mt-5 mb-5 db-flex">
         
     </div>
@@ -106,6 +58,9 @@
 <script>
     const readers = []
     const writers = []
+    let t = 0
+    const readerRequests = []
+    const writerRequests = []
     const readerCreateBtn = document.querySelector('#reader-create-btn')
     const writerCreateBtn = document.querySelector('#writer-create-btn')
     const readerDestroyBtn = document.querySelector('#reader-destroy-btn')
@@ -113,38 +68,104 @@
 
     const dbFlex = document.querySelector('.db-flex')
     
-    async function createReader()
+    function createReader()
     {
-        while(writers.length);
-        readers.push(0)
-        dbFlex.innerHTML += `<div class="reader">Reader</div>`
+        if(writers.length)
+        {
+            readerRequests.push(t++)
+        }
+        else
+        {
+            readers.push(0)
+            dbFlex.innerHTML += `<div class="reader">Reader</div>`
+        }
     }
 
-    async function createWriter()
+    function createWriter()
     {
-        while(writers.length || readers.length);
-        writers.push(0)
-        dbFlex.innerHTML += `<div class="writer">Writer</div>`
+        if(writers.length || readers.length)
+        {
+            writerRequests.push(t++)
+        }
+        else
+        {
+            writers.push(0)
+            dbFlex.innerHTML += `<div class="writer">Writer</div>`
+        }
     }
 
-    async function main(){
-        
+        readerCreateBtn.addEventListener('click', createReader)
 
-        readerCreateBtn.addEventListener('click', await createReader)
-
-        writerCreateBtn.addEventListener("click", await createWriter)
+        writerCreateBtn.addEventListener("click", createWriter)
 
         readerDestroyBtn.addEventListener('click', () => {
+
+            if(readers.length === 0)
+            {
+                alert("There are no readers left. So cannot remove.")
+                return
+            }
+
             document.querySelector(".reader").remove()
             readers.pop()
+
+            if(!writers.length)
+            {   
+                if(!readers.length)
+                {
+                    writerRequests.shift()
+                    writers.push(0)
+                    dbFlex.innerHTML += `<div class="writer">Writer</div>`
+                }
+                else
+                {
+                    while(readerRequests.length)
+                    {
+                        readerRequests.shift()
+                        readers.push(0)
+                        dbFlex.innerHTML += `<div class="reader">Reader</div>`
+                    }
+                }
+            }
         })
 
         writerDestroyBtn.addEventListener('click', () => {
+            if(writers.length === 0)
+            {
+                alert("There are no writers left. So cannot remove.")
+                return
+            }
+
             document.querySelector(".writer").remove()
             writers.pop()
-        })
-    }
 
-    main()
+            if(!writers.length)
+            {   
+                if(!readers.length)
+                {
+                    if(writerRequests.length)
+                    {
+                        writerRequests.shift()
+                        writers.push(0)
+                        dbFlex.innerHTML += `<div class="writer">Writer</div>`
+                    }
+                    else if(readerRequests.length)
+                    {
+                        readerRequests.shift()
+                        readers.push(0)
+                        dbFlex.innerHTML += `<div class="reader">Reader</div>`
+                    }
+                }
+                else
+                {
+                    if(readerRequests.length)
+                    {
+                        readerRequests.shift()
+                        readers.push(0)
+                        dbFlex.innerHTML += `<div class="reader">Reader</div>`
+                    }
+                }
+            }
+        })
 </script>
 </html>
