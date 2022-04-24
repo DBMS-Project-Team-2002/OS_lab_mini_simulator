@@ -1,90 +1,145 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>MFT MVT</title>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-       
-    </head>
-    <body>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">OS Simulator</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item active">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">System Calls</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Process Scheduling</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Memory Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">File Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Banker's Algorithm</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Process Syncronization Problems
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="producer_consumer.html">Producer Consumer Problem</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Readers Writers Problem</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Dining Philosophers Problem</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-        <br>
-        <div class="container">
-            <div class="jumbotron">
-                <h1 class="display-3">MFT</h1>
-                <p class="lead">Multiprogramming with Fixed Tasks</p>
-                <hr class="my-4">
-                <p>MFT (Multi programming with fixed number of task) or fixed partitioning scheme: At the time of Operating System installation, MFT scheme will be partitioned the memory into fixed sized blocks.</p>
-                <p class="lead">
-                  <a class="btn btn-secondary" href="https://www.javatpoint.com/os-fixed-partitioning" role="button">Click here to learn more about MFT</a>
-                  <br><br><a class="btn btn-secondary" href="mft.html" role="button">Click here to simulate MFT</a>
-                </p>
-            </div>
-            <br>
-        </div>
-        <div class="container">
-            <div class="jumbotron">
-                <h1 class="display-3">MVT</h1>
-                <p class="lead">Multiprogramming with Varialbe Tasks</p>
-                <hr class="my-4">
-                <p>MVT (Multiprogramming with a Variable number of Tasks) is the memory management technique in which each job gets just the amount of memory it needs. That is, the partitioning of memory is dynamic and changes as jobs enter and leave the system.</p>
-                <p class="lead">
-                  <a class="btn btn-secondary" href="https://www.javatpoint.com/os-dynamic-partitioning" role="button">Click here to learn more about MVT</a>
-                  <br><br><a class="btn btn-secondary" href="mvt.html" role="button">Click here to simulate MVT</a>
+<html lang="en">
 
-                </p>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>OS Simulator</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet">
+
+    <!-- =======================================================
+  * Template Name: BizLand - v3.7.0
+  * Template URL: https://bootstrapmade.com/bizland-bootstrap-business-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="d-flex align-items-center">
+        <div class="container d-flex align-items-center justify-content-between">
+
+            <h1 class="logo">OS Simulator<span>.</span></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <a href="home.html" class="logo"><img src="assets/img/logo.png" alt=""></a>
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto active" href="index.html">Home</a></li>
+                    <li><a class="nav-link scrollto" href="#about">About</a></li>
+                    <li><a class="nav-link scrollto" href="index.html#services">All Topics</a></li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
+
+        </div>
+    </header><!-- End Header -->
+
+    <!-- ======= Hero Section ======= -->
+    <section id="hero" class="d-flex align-items-center">
+        <div class="container" data-aos="zoom-out" data-aos-delay="100">
+            <h1>Welcome to <span>Memory Management</span></h1><br>
+            <div class="d-flex">
+                <a href="#about" class="btn-get-started scrollto">Get Started</a>
+                <!-- <a href="https://www.youtube.com/watch?v=6bXaiR2aAxA" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Watch Video</span></a> -->
             </div>
-</div>
+        </div>
+    </section><!-- End Hero -->
+
+    <main id="main">
+
+        <!-- ======= Featured Services Section ======= -->
+        
+
+        <!-- ======= About Section ======= -->
+        <section id="about" class="about section-bg">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-title">
+                    <h1>Memory Management</h1>
+                    <!-- <h3>Know <span>About topic</span></h3>
+                    <p>Operating System</p> -->
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
+                        <img src="mft.png" width="330" class="img-fluid" alt="">
+                    </div>
+                    <div class="col-lg-6 pt-4 pt-lg-0 content d-flex flex-column justify-content-center"
+                        data-aos="fade-up" data-aos-delay="100">
+                        <h3>What is MFT</h3>
+                        <p>The earliest and one of the simplest technique which can be used to load more than one processes into the main memory is Fixed partitioning or Contiguous memory allocation.</p>
+            <p>In this technique, the main memory is divided into partitions of equal or different sizes. The operating system always resides in the first partition while the other partitions can be used to store user processes. The memory is assigned to the processes in contiguous way.            </p>
+            <p>In fixed partitioning,
+                the partitions cannot overlap.
+                A process must be contiguously present in a partition for the execution.</p>
+                <p class="lead">
+                    
+                    <a class="btn btn-secondary" href="https://www.javatpoint.com/os-fixed-partitioning" role="button">Click here to learn more about MFT</a>
+                    <a class="btn btn-secondary" href="mft.html" role="button">Click here to simulate MFT</a>
+                  </p>                    </div>
+                </div><br> <br>
+                <div class="row">
+                    <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
+                        <img src="mvt.png" width="330" class="img-fluid" alt="">
+                    </div>
+                    <div class="col-lg-6 pt-4 pt-lg-0 content d-flex flex-column justify-content-center"
+                        data-aos="fade-up" data-aos-delay="100">
+                        <h3>What is MVT?</h3>
+                        <p>Dynamic partitioning tries to overcome the problems caused by fixed partitioning. In this technique, the partition size is not declared initially. It is declared at the time of process loading.</p></div>
+                        <p style="margin-left:5em">The first partition is reserved for the operating system. The remaining space is divided into parts. The size of each partition will be equal to the size of the process. The partition size varies according to the need of the process so that the internal fragmentation can be avoided.</p>
+                        <p style="margin-left:5em">Given the fact that the partitions in dynamic partitioning are created according to the need of the process, It is clear that there will not be any internal fragmentation because there will not be any unused remaining space in the partition.</p>
+                        <p class="lead">
+                            <a class="btn btn-secondary" href="https://www.javatpoint.com/os-dynamic-partitioning" role="button">Click here to learn more about MVT</a>
+                            <a class="btn btn-secondary" href="mvt.html" role="button">Click here to simulate MVT</a>
+                          </p>
+                    </div>
+            </div>
+        </section><!-- End About Section -->
+
+        
+    </main><!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    
+
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/purecounter/purecounter.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
+
 </body>
+
 </html>
