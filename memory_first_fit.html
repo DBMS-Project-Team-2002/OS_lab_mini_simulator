@@ -44,8 +44,22 @@
             margin-top: 2rem;
         }
     </style>
+</head>
+<body>
+    <center><h1 class="mt-5 text-decoration-underline">First Fit Simulator</h1></center>
+    <div class="inputs-container">
+        <h3>Enter the values here</h3>
+        <input type="number" name="hole_count" id="hole_count" placeholder="Enter number of holes"/>
+        <div class="hole-inputs"></div>
+        <input type="number" name="mem-req-size" id="mem-req-size" placeholder="Enter memory request size" style="display: none;"/>
+        <!-- <button class="btn" type="button" id="submit">Submit</button> -->
+        <button type="button" class="btn btn-primary mt-3" id="submit">Submit</button>
+    </div>
+    <div class="results">
+        <h3>Results of allocation</h3>
+    </div>
+</body>
     <script>
-        window.onload = () => {
             const inputContainer = document.querySelector(".inputs-container")
             const numInput = document.getElementById("hole_count")
             const submitBtn = document.getElementById("submit")
@@ -71,7 +85,7 @@
 
                     for(let i = 1; i <= numHoles; i++)
                     {
-                        const holeISize = document.getElementById(`hole_size_${i}`).value
+                        const holeISize = +document.getElementById(`hole_size_${i}`).value
                         holeSizeList.push(holeISize)
                     }
                     
@@ -79,51 +93,36 @@
                 }
                 else
                 {
-                    const memoryRequestSize = document.getElementById("mem-req-size").value
+                    const memoryRequestSize = +document.getElementById("mem-req-size").value
                     const resultContainer = document.querySelector(".results")
                     numMemoryRequests++
 
                     let i = 0
                     let allocated = false
 
-                    for(const holeSize of holeSizeList)
+                    console.log(holeSizeList)
+
+                    for(;i<holeSizeList.length;i++)
                     {
-                        if(holeSize >= memoryRequestSize)
+                        if(holeSizeList[i] >= memoryRequestSize)
                         {   
+                            console.log(`HoleSize : ${holeSizeList[i]} MemoryRequestSize : ${memoryRequestSize}`)
                             allocated = true
                             holeSizeList[i] -= memoryRequestSize
                             resultContainer.innerHTML += `<p>Process${numMemoryRequests} has been allocated ${memoryRequestSize}KB of memory successfully.</p>`
-                            resultContainer += `<b>Remaining hole sizes are: </b>`
+                            resultContainer.innerHTML += `<b>Remaining hole sizes are: </b>`
                             resultContainer.innerHTML += `<p>${holeSizeList.join(" ")}</p>`
                             break;
                         }
-
-                        i++
                     }
 
                     if(!allocated)
                     {
                         resultContainer.innerHTML += `<p>Process${numMemoryRequests} could not be allocated ${memoryRequestSize}KB of memory.</p>`
+                        resultContainer.innerHTML += `<b>Remaining hole sizes are: </b>`
+                        resultContainer.innerHTML += `<p>${holeSizeList.join(" ")}</p>`
                     }
-
-                    resultContainer.innerHTML += `<b>Remaining hole sizes are: </b>`
-                    resultContainer.innerHTML += `<p>${holeSizeList.join(" ")}</p>`
                 }
             })
-        }
     </script>
-</head>
-<body>
-    <center><h1 class="mt-5 text-decoration-underline">First Fit Simulator</h1></center>
-    <div class="inputs-container">
-        <h3>Enter the values here</h3>
-        <input type="number" name="hole_count" id="hole_count" placeholder="Enter number of holes"/>
-        <div class="hole-inputs"></div>
-        <input type="number" name="mem-req-size" id="mem-req-size" placeholder="Enter memory request size" style="display: none;"/>
-        <!-- <button class="btn" type="button" id="submit">Submit</button> -->
-        <button type="button" class="btn btn-primary mt-3" id="submit">Submit</button>
-    </div>
-    <div class="results">
-        <h3>Results of allocation</h3>
-    </div>
-</body>
+</html>
