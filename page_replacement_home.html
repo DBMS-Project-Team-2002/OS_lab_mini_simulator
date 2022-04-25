@@ -319,41 +319,32 @@
                         <ul class="faq-list">
 
                             <li>
-                                <div data-bs-toggle="collapse" class="collapsed question" href="#faq1">What are Memory
-                                    fit Algorithms ?<i class="bi bi-chevron-down icon-show"></i><i
+                                <div data-bs-toggle="collapse" class="collapsed question" href="#faq1">What are Page Faults
+                                    ?<i class="bi bi-chevron-down icon-show"></i><i
                                         class="bi bi-chevron-up icon-close"></i></div>
                                 <div id="faq1" class="collapse" data-bs-parent=".faq-list">
                                     <p>
-                                        Memory fit algorithms are algorithms that are used to allocate contiguos memory
-                                        to processes
-                                        when there are certain gaps in the memory and some memory is unoccupied by
-                                        processes and forms holes.
+                                        A page fault occurs when a page referenced by the CPU is not found in the main memory.
                                     </p>
                                 </div>
                             </li>
 
                             <li>
-                                <div data-bs-toggle="collapse" href="#faq2" class="collapsed question">Why do we need
-                                    memory fit algorithms ?<i class="bi bi-chevron-down icon-show"></i><i
+                                <div data-bs-toggle="collapse" href="#faq2" class="collapsed question">What is a good page replacement algorithm?<i class="bi bi-chevron-down icon-show"></i><i
                                         class="bi bi-chevron-up icon-close"></i></div>
                                 <div id="faq2" class="collapse" data-bs-parent=".faq-list">
                                     <p>
-                                        We need these algorithms to efficiently allocate contiguos memry to processes
-                                        and try to avoid fragmentation to some extent.
+                                        A good page replacement algorithm is one that minimizes the number of page faults.
                                     </p>
                                 </div>
                             </li>
 
                             <li>
-                                <div data-bs-toggle="collapse" href="#faq3" class="collapsed question">What is the
-                                    advantage of next fit over first fit ?<i class="bi bi-chevron-down icon-show"></i><i
+                                <div data-bs-toggle="collapse" href="#faq3" class="collapsed question">Which is the Page Replacement Algorithm that gives the lowest page fault rate?<i class="bi bi-chevron-down icon-show"></i><i
                                         class="bi bi-chevron-up icon-close"></i></div>
                                 <div id="faq3" class="collapse" data-bs-parent=".faq-list">
                                     <p>
-                                        Next fit tries to address this problem by starting the search for the free
-                                        portion of parts not from the start of the memory, but from where it ends last
-                                        time. Next fit is a very fast searching algorithm and is also comparatively
-                                        faster than First Fit and Best Fit Memory Management Algorithms.
+                                        Optimal Page Replacement algorithm has the lowest page fault rate as it has knowledge of all the pages beforehand.
                                     </p>
                                 </div>
                             </li>
