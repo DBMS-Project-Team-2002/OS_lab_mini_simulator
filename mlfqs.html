@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Multi-Level Feedback Queue Scheduling </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  </head>
+
+  <style>
+    .button
+    {
+      background-color:rgb(150,150,150);
+      border: rgb(150,150,150); 
+      color: white;
+    }
+
+    .split
+    {
+      height: 80%;
+      width: 50%;
+      position: fixed;
+      z-index: 1;
+      top: 20%;
+      overflow-x: hidden;
+      padding-top: 20px;
+    }
+
+    .left
+    {
+      left: 0;
+    }
+
+    .right
+    {
+      right: 0;
+    }
+
+    .centered
+    {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    #queue_one
+    {
+      width: 602px;
+      height: 100px;
+    }
+
+    #queue_two
+    {
+      width: 602px;
+      height: 100px;
+    }
+
+    .block{
+      position: relative;
+      display: none;
+      border-right: 1px solid black;
+      float: left;
+      text-align: center;
+      background-color: rgba(112, 128, 144, 0.44);
+      height: 98px;
+    }
+
+    .bottom{
+      width: 100%;
+      margin-top: 100px;
+      text-align: right;
+      margin-bottom: 1;
+    }
+  </style>
+
+  <body style="background-color: rgb(220,220,220);">
+    <a href="index.html">Back</a>
+
+    <h1 style="text-align:center">Multi-level Feedback Queue Scheduling</h1>
+    <br><br>
+
+    <div class="split left" id="left_pane">
+       Details of the Process:<br>
+       <input type="number" min="0" id="arr_time" placeholder="arrival time"></input>
+       <input type="number" min="0" id="bur_time" placeholder="burst time"></input>
+       <button id="add" class="button" onclick="add_proc()">Add</button> <br><br>
+
+       Time Slice of the first queue:<br>
+       <input type="number" min="0" id="time_slice" placeholder="time slice"></input><br><br>
+
+       Time Quantum of the first queue:<br>
+       <input type="number" min="0" id="time_quant" placeholder="time quantum"></input>
+       <button id="start" class="button" onclick="mlfq()">Start</button> <br><br><br>
+
+       <table id="proc_table" class="table table-bordered" style="width:500px;display:none">
+         <thead>
+           <tr id="thead" style="background-color:rgb(50,50,50);">
+             <th style="color:white">Proc_ID</th>
+             <th style="color:white">Arrival Time</th>
+             <th style="color:white">Burst Time</th>
+             <th style="color:white">Waiting Time</th>
+             <th style="color:white">Turn Around Time</th>
+           </tr>
+           <tbody id="proc_body"></tbody>
+         </thead>
+       </table>
+
+
+      <p id="Stat"></p>
+   </div>
+
+   <div class="split right" id="right_pane" style="display:none;">
+       <h3>Gantt Chart</h3><br>
+
+       First Queue
+       <div id="queue_one"></div><br><br><br><br>
+
+       Second Queue
+       <div id="queue_two"></div><br><br><br><br>
+
+   </div>
+
+  </body>
+
+  <script>
+
+  var proc_arr = [];
+  var index = 1;
+  var time_q;
+  var time_s;
+  var total_1;
+  var total_2;
+  var sequence_1 = [];
+  var sequence_2 = [];
+  var queue = [];
+  var avg_wt;
+  var avg_tat;
+  var pixel_1 = 0;
+  var pixel_2 = 0;
+
+  $(function(){
+    $("#add").click(function(){
+      add_proc();
+    })
+
+    function add_proc()
+    {
+      var at = parseInt(document.getElementById("arr_time").value);
+      var bt = parseInt(document.getElementById("bur_time").value);
+
+      proc_arr.push({
+        "arr_time":at,
+        "bur_time":bt,
+        "finish": parseInt("0"),
+        "expire": parseInt("0"),
+        "queue": parseInt("0"),
+        "number": index,
+        "wait_time": parseInt("0"),
+        "turn_around_time": parseInt("0")
+      });
+      index++;
+      console.log(proc_arr);
+
+      document.getElementById("arr_time").value = "";
+      document.getElementById("bur_time").value = "";
+    };
+
+    $("#start").click(function(){
+      time_q = parseInt(document.getElementById("time_quant").value);
+      console.log(time_q);
+      document.getElementById("time_quant").value = "";
+
+      time_s = parseInt(document.getElementById("time_slice").value);
+      console.log(time_s);
+      document.getElementById("time_slice").value = "";
+
+      mlfq();
+
+      var i = 0;
+
+      document.getElementById("right_pane").style.display = 'block';
+
+      console.log(total_1);
+      console.log(sequence_1[total_1].start);
+      pixel_1 = parseInt(600/(sequence_1[total_1].start));
+      console.log("%d---%d\n",sequence_1[total_1].start, parseInt(600/sequence_1[total_1].start));
+      var c = sequence_1[total_1].start * parseInt(600/sequence_1[total_1].start) + 2;
+      console.log("Container width of Q1: %d", c);
+
+      $("#queue_one").css("width", c+"px");
+      displayBlock(i);
+
+
+      console.log(total_2);
+      console.log(sequence_2[total_2].start);
+      pixel_2 = parseInt(600/(sequence_2[total_2].start));
+      console.log("%d---%d\n",sequence_2[total_2].start, parseInt(600/sequence_2[total_2].start));
+      c = sequence_2[total_2].start * parseInt(600/sequence_2[total_2].start) + 2;
+      console.log("Container width of Q2: %d", c);
+
+      document.getElementById("proc_table").style.display = 'block';
+
+      $("#queue_two").css("width", c+"px");
+      displayBlock1(i);
+
+
+      document.getElementById("proc_table").style.display = 'block';
+      drawTable(0);
+    })
+
+    function mlfq()
+    {
+      var bur = [];
+      var n = proc_arr.length;
+
+      for(i=0; i<n; i++)
+        proc_arr[i].expire = time_s;
+
+      for(i=0; i<n; i++)
+        for(j=i+1; j<n; j++)
+          if(proc_arr[i].arr_time > proc_arr[j].arr_time)
+          {
+            var temp = proc_arr[i];
+            proc_arr[i] = proc_arr[j];
+            proc_arr[j] = temp;
+          }
+
+      for(i=0; i<n; i++)
+        bur.push(proc_arr[i].bur_time);
+
+      console.log(bur);
+
+      console.log(proc_arr);
+
+      var time = 0;
+      var chance = 0;
+      var st_time;
+      var first;
+      var ind_1 = 0;
+      var ind_2 = 1;
+      var rr_time = 0;
+      var i;
+      var val;
+      var flag = 0;
+
+      var copy = proc_arr.concat();
+
+      if(copy[0].arr_time > 0)
+      {
+        sequence_1.push({start:time, n:null});
+        sequence_2.push({start:time, n:null});
+        console.log(sequence_1);
+        console.log(sequence_2);
+        time += copy[0].arr_time;
+      }
+
+      sequence_1.push({start:time, n:copy[0].number});
+      console.log(sequence_1);
+
+      while(1)
+      {
+        if(copy[ind_1].queue == 0)
+        {
+          if(copy[ind_1].finish == 0)
+          {
+            copy[ind_1].bur_time -= 1;
+            copy[ind_1].expire -= 1;
+          }
+
+          for(i=0; i<proc_arr.length; i++)
+            if(i != ind_1 && copy[i].finish == 0 && copy[i].arr_time <= time)
+              copy[i].wait_time += 1;
+
+          time += 1;
+          rr_time += 1;
+
+          if(copy[ind_1].bur_time == 0)
+          {
+            copy[ind_1].finish = 1;
+            sequence_1.push({start:time, n:null});
+            //console.log(sequence_1);
+            rr_time = 0;
+
+            val = ind_1;
+            for(i=ind_1+1; i<n; i++)
+              if(copy[i].finish==0 && copy[i].arr_time<=time && copy[i].queue==0)
+              {
+                ind_1 = i;
+                sequence_1.push({start:time, n:copy[ind_1].number});
+                //console.log(sequence_1);
+                break;
+              }
+
+            if(i==n)
+              for(i=0; i<val; i++)
+                if(copy[i].finish==0 && copy[i].arr_time<=time && copy[i].queue==0)
+                {
+                  ind_1 = i;
+                  sequence_1.push({start:time, n:copy[ind_1].number});
+                  //console.log(sequence_1);
+                  break;
+                }
+
+            if(i==val)
+              for(i=0; i<n; i++)
+                if(copy[i].finish==0 && copy[i].arr_time<=time && copy[i].queue==1)
+                {
+                  ind_1 = i;
+                  sequence_2.push({start:time, n:copy[ind_1].number});
+                  //console.log(sequence_2);
+                  break;
+                }
+
+            //console.log("Value: "+val);
+
+            if(copy[ind_1].queue == 1)
+              flag = 1;
+          }
+          else if(copy[ind_1].expire == 0 && copy[ind_1].bur_time != 0)
+          {
+            copy[ind_1].queue = 1;
+            sequence_1.push({start:time, n:null});
+            //console.log(sequence_1);
+
+            val = ind_1;
+            for(i=0; i<n; i++)
+              if(copy[i].finish == 0 && copy[i].queue == 0 && copy[i].arr_time <= time)
+              {
+                ind_1 = i;
+                sequence_1.push({start:time, n:copy[i].number});
+                //console.log(sequence_1);
+                break;
+              }
+
+            if(ind_1 == val)
+            {
+              sequence_2.push({start:time, n:copy[ind_1].number});
+              //console.log(sequence_2);
+            }
+
+            rr_time = 0;
+          }
+
+          if(flag==0 && rr_time == time_q)
+          {
+            for(i=ind_1+1; i<n; i++)
+              if(copy[i].queue == 0 && copy[i].finish == 0 && copy[i].arr_time <= time)
+              {
+                ind_1 = i;
+                break;
+              }
+
+            if(i == n)
+              for(i=0; i<ind_1; i++)
+                if(copy[i].queue == 0 && copy[i].finish == 0 && copy[i].arr_time <= time)
+                {
+                  ind_1 = i;
+                  break;
+                }
+
+
+            sequence_1.push({start:time, n:copy[ind_1].number});
+            //console.log(sequence_1);
+
+            rr_time = 0;
+          }
+
+          if(flag==0 && ind_1 != n-1 && ind_2 != -1 && copy[ind_2].arr_time == time && copy[ind_2].finish == 0)
+          {
+            ind_1 = ind_2;
+            if(ind_2 < n-1)
+              ind_2 += 1;
+            else
+              ind_2 = -1;
+            sequence_1.push({start:time, n:copy[ind_1].number});
+            //console.log(sequence_1);
+
+            rr_time = 0;
+          }
+        }
+        else
+        {
+          if(copy[ind_1].finish == 0)
+            copy[ind_1].bur_time -= 1;
+
+          for(i=0; i<n; i++)
+            if(i != ind_1 && copy[i].finish == 0 && copy[i].arr_time <= time)
+              copy[i].wait_time += 1;
+
+          time += 1;
+
+          if(copy[ind_1].bur_time == 0)
+          {
+            copy[ind_1].finish = 1;
+
+            for(i=0; i<n; i++)
+              if(copy[i].queue == 1 && copy[i].finish == 0 && copy[i].arr_time <= time)
+              {
+                sequence_2.push({start:time, n:copy[i].number});
+                //console.log(sequence_2);
+                break;
+              }
+
+            if(i == n)
+            {
+              sequence_2.push({start:time, n:null});
+              //console.log(sequence_2);
+            }
+          }
+
+          for(i=ind_1; i<n; i++)
+            if(copy[i].queue == 0 && copy[i].arr_time == time && copy[i].finish == 0)
+            {
+              sequence_2.push({start:time, n:null});
+              //console.log(sequence_2);
+              ind_1 = i;
+              sequence_1.push({start:time, n:copy[ind_1].number});
+              //console.log(sequence_1);
+              break;
+            }
+        }
+        //
+        // console.log(copy);
+        // console.log(sequence_1);
+        // console.log(ind_1);
+        // console.log(val);
+        // console.log(sequence_2);
+
+        for(i=0; i<n; i++)
+          if(copy[i].finish == 0)
+            break;
+
+        if(i==n)
+          break;
+      }
+
+      total_1 = sequence_1.length - 1;
+      total_2 = sequence_2.length - 1;
+
+      for(i=0; i<n; i++)
+      {
+        proc_arr[i].wait_time = copy[i].wait_time;
+        proc_arr[i].bur_time = bur[i];
+        proc_arr[i].turn_around_time = proc_arr[i].bur_time + copy[i].wait_time;
+      }
+      console.log(proc_arr);
+
+      var sum_wt = 0;
+      var sum_tat = 0;
+      for(i=0; i<n; i++)
+      {
+        sum_wt += proc_arr[i].wait_time;
+        sum_tat += proc_arr[i].turn_around_time;
+      }
+
+      avg_wt = sum_wt / n;
+      avg_tat = sum_tat / n;
+
+    }
+
+    function drawTable(i)
+    {
+      if(i < proc_arr.length)
+      {
+        console.log(proc_arr[i]);
+        $("#proc_body").append("<tr><td>"+proc_arr[i].number+"</td><td>"+proc_arr[i].arr_time+"</td><td>"+proc_arr[i].bur_time+"</td><td>"+proc_arr[i].wait_time+"</td><td>"+proc_arr[i].turn_around_time+"</td></tr>");
+        drawTable(i+1);
+      }
+      else
+      {
+        document.getElementById("Stat").style.display = 'block';
+        console.log(avg_wt);
+        console.log(avg_tat);
+        $("#Stat").append("Average waiting Time: "+avg_wt+"<br>Average Turn Around Time: "+avg_tat+"<br>");
+        return;
+      }
+    }
+
+    function displayBlock(i)
+    {
+      if(i == total_1)
+      {
+          return;
+      }
+
+      console.log(sequence_1[i]);
+
+      var blockWidth = (sequence_1[i+1].start - sequence_1[i].start) * pixel_1;
+
+      if(sequence_1[i+1].start == sequence_1[i].start)
+        displayBlock(i+1);
+
+      if(sequence_1[i].n == null)
+        $('#queue_one').append('<div class="block" id="process-'+sequence_1[i].start+'">Idle<div class="bottom">'+sequence_1[i+1].start+'</div></div>');
+      else
+        $('#queue_one').append('<div class="block" id="process-'+sequence_1[i].start+'">'+ sequence_1[i].n +'<div class="bottom">'+sequence_1[i+1].start+'</div></div>');
+
+      $('#process-'+sequence_1[i].start).css('width', blockWidth);
+      $('#process-'+sequence_1[i].start).fadeIn('slow', function(){
+        displayBlock(i+1);
+      });
+    }
+
+    function displayBlock1(i)
+    {
+      if(i == total_2)
+        return;
+
+      console.log(sequence_2[i]);
+
+      var blockWidth = (sequence_2[i+1].start - sequence_2[i].start) * pixel_2;
+
+      if(sequence_2[i].n == null)
+        $('#queue_two').append('<div class="block" id="process1-'+sequence_2[i].start+'">Idle<div class="bottom">'+sequence_2[i+1].start+'</div></div>');
+      else
+        $('#queue_two').append('<div class="block" id="process1-'+sequence_2[i].start+'">'+ sequence_2[i].n +'<div class="bottom">'+sequence_2[i+1].start+'</div></div>');
+
+      $('#process1-'+sequence_2[i].start).css('width', blockWidth);
+      $('#process1-'+sequence_2[i].start).fadeIn('slow', function(){
+        displayBlock1(i+1);
+      });
+    }
+  });
+
+  </script>
+</html>
