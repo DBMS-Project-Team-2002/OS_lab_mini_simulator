@@ -12,174 +12,112 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
     <style>
-        .inputs-container{
+        .inputs-container {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             margin-top: 3rem;
         }
-        #hole_count{
+
+        #hole_count {
             outline: none;
             margin-top: 1rem;
         }
-        #submit{
-            background-color: #f8f9fa;
-            outline: none;
-            border: none;
-            margin-top: 10px;
-            border: 2px solid grey;
-        }
-        #submit:hover{
-            opacity: 0.8;
-            color: grey;
-        }
-        .hole-inputs{
+
+        .hole-inputs {
             margin-top: 0.7rem;
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
             gap: 8px;
         }
-        .hole-sizes{
+
+        .hole-sizes {
             display: inline-block;
             width: fit-content;
         }
-        #mem-req-size{
+
+        #mem-req-size {
             outline: none;
             margin-top: 0.7rem;
         }
-        .results{
+
+        .results {
             text-align: center;
             margin-top: 2rem;
         }
     </style>
-    <script>
-        window.onload = () => {
-            const inputContainer = document.querySelector(".inputs-container")
-            const numInput = document.getElementById("hole_count")
-            const submitBtn = document.getElementById("submit")
-            const holeSizes = document.querySelector(".hole-inputs")
-            const memoryRequestInput = document.querySelector("#mem-req-size")
-            const holeSizeList = [];
-            let numMemoryRequests = 0
-
-            submitBtn.addEventListener("click", () => {
-                if(!holeSizes.children.length)
-                {
-                    const numHolesRequired = numInput.value
-
-                    for(let i = 1; i <= numHolesRequired; i++)
-                    {
-                        const holeSizeInputHTML = `<input type="number" id="hole_size_${i}" class="hole_sizes" placeholder="Enter size of hole-${i} in KB"/>`
-                        holeSizes.innerHTML += holeSizeInputHTML
-                    }
-                }
-                else if(memoryRequestInput.style.display === "none")
-                {
-                    const numHoles = holeSizes.children.length
-
-                    for(let i = 1; i <= numHoles; i++)
-                    {
-                        const holeISize = document.getElementById(`hole_size_${i}`).value
-                        holeSizeList.push(holeISize)
-                    }
-                    
-                    memoryRequestInput.style.display = "inline"
-                }
-                else
-                {
-                    const memoryRequestSize = document.getElementById("mem-req-size").value
-                    const resultContainer = document.querySelector(".results")
-                    numMemoryRequests++
-
-                    let i = 0
-                    let allocated = false
-                    let startIndex = 0
-                    
-                    for(let index = startIndex; ;index = (index+1)%(holeSizeList.length))
-                    {
-                        if(holeSizeList[index] <= memoryRequestSize)
-                        {
-                            allocated = true
-                            holeSizeList[index] -= memoryRequestSize
-                            resultContainer.innerHTML += `<p>Process${numMemoryRequests} has been allocated ${memoryRequestSize}KB of memory successfully.</p>`
-                            break
-                        }
-                    }
-                    
-                    i++
-
-                    if(!allocated)
-                    {
-                        resultContainer.innerHTML += `<p>Process${numMemoryRequests} could not be allocated ${memoryRequestSize}KB of memory.</p>`
-                    }
-                
-                    resultContainer.innerHTML += `<b>Remaining hole sizes are: </b>`
-                    resultContainer.innerHTML += `<p>${holeSizeList.join(" ")}</p>`
-                }
-            })
-        }
-    </script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">OS Simulator</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">System Calls</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Process Scheduling</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Memory Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">File Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Banker's Algorithm</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Process Syncronization Problems
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="producer_consumer.html">Producer Consumer Problem</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Readers Writers Problem</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Dining Philosophers Problem</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <center>
+        <h1 class="mt-5 text-decoration-underline">Next Fit Simulator</h1>
+    </center>
     <div class="inputs-container">
         <h3>Enter the values here</h3>
-        <input type="number" name="hole_count" id="hole_count" placeholder="Enter number of holes"/>
+        <input type="number" name="hole_count" id="hole_count" placeholder="Enter number of holes" />
         <div class="hole-inputs"></div>
-        <input type="number" name="mem-req-size" id="mem-req-size" placeholder="Enter memory request size" style="display: none;"/>
-        <button type="button" id="submit">Submit</button>
+        <input type="number" name="mem-req-size" id="mem-req-size" placeholder="Enter memory request size"
+            style="display: none;" />
+        <button type="button" class="btn btn-primary mt-3" id="submit">Submit</button>
     </div>
     <div class="results">
         <h3>Results of allocation</h3>
     </div>
 </body>
+<script>
+    const inputContainer = document.querySelector(".inputs-container")
+    const numInput = document.getElementById("hole_count")
+    const submitBtn = document.getElementById("submit")
+    const holeSizes = document.querySelector(".hole-inputs")
+    const memoryRequestInput = document.querySelector("#mem-req-size")
+    const holeSizeList = []
+    let startIndex = 0
+    let numMemoryRequests = 0
+
+    submitBtn.addEventListener("click", () => {
+        if (!holeSizes.children.length) {
+            const numHolesRequired = numInput.value
+
+            for (let i = 1; i <= numHolesRequired; i++) {
+                const holeSizeInputHTML = `<input type="number" id="hole_size_${i}" class="hole_sizes" placeholder="Enter size of hole-${i} in KB"/>`
+                holeSizes.innerHTML += holeSizeInputHTML
+            }
+        }
+        else if (memoryRequestInput.style.display === "none") {
+            const numHoles = holeSizes.children.length
+
+            for (let i = 1; i <= numHoles; i++) {
+                const holeISize = +document.getElementById(`hole_size_${i}`).value
+                holeSizeList.push(holeISize)
+            }
+
+            memoryRequestInput.style.display = "inline"
+        }
+        else {
+            const memoryRequestSize = +document.getElementById("mem-req-size").value
+            const resultContainer = document.querySelector(".results")
+            numMemoryRequests++
+
+            let allocated = false
+
+            for (let index = startIndex; ; index = (index + 1) % (holeSizeList.length)) {
+                if (holeSizeList[index] >= memoryRequestSize) {
+                    allocated = true
+                    startIndex = index
+                    holeSizeList[index] -= memoryRequestSize
+                    resultContainer.innerHTML += `<p>Process${numMemoryRequests} has been allocated ${memoryRequestSize}KB of memory successfully.</p>`
+                    break
+                }
+            }
+
+            if (!allocated) {
+                resultContainer.innerHTML += `<p>Process${numMemoryRequests} could not be allocated ${memoryRequestSize}KB of memory.</p>`
+            }
+
+            resultContainer.innerHTML += `<b>Remaining hole sizes are: </b>`
+            resultContainer.innerHTML += `<p>${holeSizeList.join(" ")}</p>`
+        }
+    })
+</script>
+</html>

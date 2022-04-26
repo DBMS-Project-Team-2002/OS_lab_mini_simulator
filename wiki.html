@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+    WIKI
+  </title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+</head>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">OS simulator</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="index.html">Home</a></li>
+      <li class="active"><a href="#">Wiki</a></li>
+    </ul>
+  </div>
+</nav>
+<br><br><br>
+<style>
+.card {
+  min-height: 100px;
+}
+.intro{
+  margin-top: 22px;
+  padding: 30px 0px;
+  background-color: #f3f3f3;
+}
+body{
+  margin-left: 5%;
+  margin-right: 2%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  background-color:  rgb(220,220,220);
+}
+</style>
+<body>
+  <h1 align="center">Basic Concepts</h1>
+  <h3 align="center"> CPU-I/O Burst Cycle</h3>
+  <p>Process execution consists of a cycle of CPU execution and I/O wait. Processes alternate between these two states. Process execution begins with a CPU burst. That is followed by an I/O burst, which is followed by another CPU burst, then another I/O burst, and so on. Eventually, the final CPU burst ends with a system request to terminate execution.</p>
+  <h3 align="center">CPU Scheduler</h3>
+  <p>Whenever the CPU becomes idle, the operating system must select one of the processes in the ready queue to be executed. The selection process is carried out by the short-term scheduler, or CPU scheduler. The scheduler selects a process from the processes in memory that are ready to execute and allocates the CPU to that process.</p>
+  <h3 align="center">Dispatcher</h3>
+  <p>The dispatcher is the module that gives control of the CPU to the process selected by the short-term scheduler. This function involves the following:<br>
+
+Switching context<br>
+Switching to user mode<br>
+Jumping to the proper location in the user program to restart that program<br></p>
+
+<h1 align="center">Scheduling Algorithms</h1>
+
+<div class="container">
+  <div class="card" style="background-color: rgb(200,200,200);">
+    <div class="card-body">
+      <h2 class="card-title" align="center" style="padding-top: 10px;">First Come First Serve</h2>
+      <h4 class="card-subtitle mb-2" align="center">The simplest of all scheduling algorithms. The process that requested the CPU first is allocated the CPU first.</h4>
+      <p class="card-text ml-9" ><h3 align="center">Demerits</h3>
+        <p style="padding-left: 20px;padding-bottom: 10px;">1.Average waiting time under FCFS policy is quite long.<br>
+        2.A smaller process has to wait for a large amount of time before a bigger process that has been allocated CPU finishes its execution.<br>
+        3.Not suitable for time sharing systems where each user gets a share of CPU at regular intervals.<br>
+        </p></p>
+        <button style="margin-bottom: 1.3rem;margin-left: 45%;"><a href="fcfs.html" target="_blank">Simulation</a></button>
+    </div>
+  </div>
+  
+  <div class="card" style="background-color: rgb(200,200,200);">
+    <div class="card-body">
+      <h2 class="card-title" align="center" style="padding-top: 10px;">Shortest Job Scheduling</h2>
+      <h4 class="card-subtitle mb-2" align="center">The scheduling criteria under this policy depends on which process has the shortest-next-CPU-burst. It is an optimal way of 
+        <br>CPU scheduling, i.e it gives the minimum average waiting time for a set of processes. If two process have the same burst time
+        <br> left, FCFS is used to resolve the tie.</h4>
+      <p class="card-text"><h3 align="center">Demerits</h3>
+        <p style="padding-left: 20px;padding-bottom: 10px;">1.It often cannot be implemented at the level of short-term CPU scheduling as there is no way to know the length of the next CPU burst.<br>
+        2.The next CPU burst length is thereby approximated using statistical techniques like exponential average<br></p></p>
+        <button style="margin-bottom: 1.3rem;margin-left: 45%;"><a href="sjf.html" target="_blank">Simulation</a></button>
+    </div>
+  </div>
+
+  <div class="card" style="background-color: rgb(200,200,200);">
+    <div class="card-body">
+      <h2 class="card-title" align="center" style="padding-top: 10px;">Shortest Remaining Time First</h2>
+      <h4 class="card-subtitle mb-2" align="center" style="padding-bottom: 10px;">This is the preemptive version of Shortest Job First scheduling. A newly arrived process in the ready queue <br>may have a burst time lesser than that of the current process getting executed. In such a case, the current process is preempted <br>and the newly arrived process is scheduled to execute. Similar to SJF, FCFS is used to resolve the tie here.</h4>
+      <button style="margin-bottom: 1.3rem;margin-left: 45%;"><a href="srtf.html" target="_blank">Simulation</a></button>
+    </div>
+  </div>
+
+  <div class="card" style="background-color: rgb(200,200,200);">
+    <div class="card-body">
+      <h2 class="card-title" align="center" style="padding-top: 10px;">Largest Job First Scheduling</h2>
+      <h4 class="card-subtitle mb-2" align="center">This is the opposite of Shortest Job First scheduling. 
+        It selects for execution the process with the largest execution time.
+        It can be preemptive or non preemptive.</h4>
+      <p class="card-text"><h3 align="center">Demerits</h3>
+        <p style="padding-left: 20px;padding-bottom: 10px;">1.The disadvantage with this algorithm is the total execution time of the process must be known before the  execution.<br>
+          There is a chance for starvation of processes which have lesser execution time  when the longer processes are continually added.<br></p></p>
+          <button style="margin-bottom: 1.3rem;margin-left: 45%;"><a href="ltf.html" target="_blank">Simulation</a></button>
+    </div>
+  </div>
+
+  <div class="card" style="background-color: rgb(200,200,200);">
+    <div class="card-body">
+      <h2 class="card-title" align="center" style="padding-top: 10px;">Largest Remaining Time First Algorithm</h2>
+      <h4 class="card-subtitle mb-2" align="center" style="padding-bottom: 10px;">It is the preemptive version of the Largest job first scheduling.</h4>
+      <button style="margin-bottom: 1.3rem;margin-left: 45%;"><a href="lrtf.html" target="_blank">Simulation</a></button>
+    </div>
+  </div>
+
+  <div class="card" style="background-color: rgb(200,200,200);">
+    <div class="card-body">
+      <h2 class="card-title" align="center" style="padding-top: 10px;">Non-preemptive priority scheduling</h2>
+      <h4 class="card-subtitle mb-2" align="center" style="padding-bottom: 10px;">A more general case of the SJF scheduling where the priority was based on burst time. Each process is associated with a priority and CPU is allocated to the process with highest priority. Equal priority processes are scheduled in FCFS order. A newly arrived process is simply put in the ready queue based on its priority and does not interrupt the currently executing process.</h4>
+      <button style="margin-bottom: 1.3rem;margin-left: 45%;"><a href="prioritynonpre.html" target="_blank">Simulation</a></button>
+    </div>
+  </div>
+
+  <div class="card" style="background-color: rgb(200,200,200);">
+    <div class="card-body">
+      <h2 class="card-title" align="center" style="padding-top: 10px;">Preemptive priority scheduling</h2>
+      <h4 class="card-subtitle mb-2" align="center" style="padding-bottom: 10px;">It is a preemptive version of the priority scheduling algorithm. The priority of newly arrived processes are compared <br>with the currently executing process. If the priority is higher, then the currently executing process is preempted and the <br>newly arrived process executes</h4>
+      <button style="margin-bottom: 1.3rem;margin-left: 45%;"><a href="priority.html" target="_blank">Simulation</a></button>
+    </div>
+  </div>
+
+  <div class="card" style="background-color: rgb(200,200,200);">
+    <div class="card-body">
+      <h2 class="card-title" align="center" style="padding-top: 10px;">Round-Robin scheduling</h2>
+      <h4 class="card-subtitle mb-2" align="center"> The ready queue is treated as a circular queue. The CPU scheduler goes around the queue,
+         allocating the CPU to each of the processes a <br>time period of 1 quantum. If the burst time left for a process is less than the time quantum, then the process will itself <br>release the CPU voluntarily. If the burst time left is more than 1 time quantum, the timer for that process will go off and a context switch is forced. This algorithm is preemptive by its nature.</h4>
+      <p class="card-text"><h3 align="center">Performance</h3>
+        <p style="padding-left: 20px;padding-bottom: 10px;">1.Performance depends heavily on the time quantum. A very large time quantum will it make it effectively an FCFS algorithms and a very short time quantum will force a very large number of context switches.<br>
+          2.A rule of thumb is that 80% of the CPU bursts must be shorter than the time quantum.<br></p></p>
+          <button style="margin-bottom: 1.3rem;margin-left: 45%;"><a href="round-robin.html" target="_blank">Simulation</a></button>
+    </div>
+  </div>
+
+  <div class="card" style="background-color: rgb(200,200,200);">
+    <div class="card-body">
+      <h2 class="card-title" align="center" style="padding-top: 10px;">Highest Response Ratio Next</h2>
+      <p class="card-subtitle mb-2" align="left" style="padding-left: 10px;padding-bottom: 10px;">1.The response ratio of all the processes are calculated and the scheduler selects the process with the highest response ratio.<br>
+        2.A process once selected will run till its completion.<br>
+        3.Response ratio = (Waiting time so far + Burst Time)/Burst time.<br>
+        4.Shortest processes are favoured.
+        As the waiting time increases, the response ratio increases and the longer jobs can get past short jobs.<br></p>
+        <button style="margin-bottom: 1.3rem;margin-left: 45%;"><a href="hrrn.html" target="_blank">Simulation</a></button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

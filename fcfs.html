@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+   FCFS
+  </title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">OS simulator</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="index.html">Home</a></li>
+      <li class="active"><a href="wiki.html">Wiki</a></li>
+    </ul>
+  </div>
+</nav>
+<br><br><br>
+
+<script>
+  /*FCFS SCHEDULING*/
+
+var sequence=[];
+var complete;
+var time;
+var i;
+var total;
+var proc;
+var n;
+var average_wt=0;
+var average_tat=0;
+var stuff=[];
+var index=1;
+var throughput;
+var index=1;
+var cpu_efficiency;
+$(document).ready(function(){
+  $('#add').click(function(){
+    AddtoList();
+  })
+  function DisplayList(){
+    var table = document.getElementById("ept");
+    console.log(stuff[stuff.length-1].no);
+    $('#ept').append("<tr><td>"+stuff[stuff.length-1].no+"</td><td>"+stuff[stuff.length-1].at+"</td><td>"+stuff[stuff.length-1].bt1+"</td></tr>");
+  }
+  function AddtoList(){
+    var arrivalTime=parseInt(document.getElementById("at1").value);
+    var burstTime=parseInt(document.getElementById("bt1").value);
+    var ioTime=parseInt(document.getElementById("io").value);
+    var FinalburstTime=parseInt(document.getElementById("bt2").value);
+    console.log(arrivalTime);
+    console.log(burstTime);
+    var rtj=[];
+    rtj.push(burstTime);
+    rtj.push(ioTime);
+    rtj.push(FinalburstTime);
+    console.log(rtj);
+    stuff.push({
+      "at":arrivalTime,
+      "bt1":burstTime,
+      "io": ioTime,
+      "bt2" : FinalburstTime,
+      "check" : parseInt("0"),
+      "finish" : parseInt("0"),
+      "no":index,
+      "rt":rtj,
+      "point" : parseInt("0"),
+      "wt":parseInt("0"),
+      "tat":parseInt("0")
+    });
+    index=index+1;
+    document.getElementById("at1").value="";
+    document.getElementById("bt1").value="";
+    document.getElementById("io").value="0";
+    document.getElementById("bt2").value="0";
+    console.log(stuff);
+    DisplayList();
+  };
+  $('#start').click(function(){
+    fcfs();
+    var i = 0;
+  console.log(total);
+   console.log(sequence[total].start);
+    var totalTime = sequence[total].start;
+    pixel = parseInt(600/totalTime);
+    console.log("%d---%d\n",totalTime,pixel);
+    var containerWidth = pixel*totalTime + 2;
+    console.log("containerWidth is %d",containerWidth);
+    $('#outer-div').css('width',containerWidth+'px');
+    displayBlock(i);
+  })
+  var Q=[];
+  function fcfs(){
+    var proc=[];
+    for(i=0;i<stuff.length;i++){
+      proc.push(i+1);
+    }
+    var n=stuff.length;
+    for(i=0;i<n;i++){
+      for(j=i+1;j<n;j++){
+        if(stuff[i].at>stuff[j].at)
+        {
+          var temp;
+          temp=stuff[i];
+          stuff[i]=stuff[j];
+          stuff[j]=temp;
+          temp=proc[i];
+          proc[i]=proc[j];
+          proc[j]=temp;
+        }
+      }
+    }
+    n=stuff.length;
+    console.log(stuff);
+    var time=0;
+    var complete=0;
+    var temp=null;
+    var st_time;
+    sequence=[];
+    if(stuff[0].at>0)
+    {
+      console.log("Arrival time of the first process is not zero!");
+      sequence.push({start:0 , n:null});
+      time+=stuff[0].at;
+    }
+    Enqueue(0);
+    var temp=null;
+    while(complete!=n)
+    {
+      var index;
+      if(Q.length>0)
+        index=Dequeue();
+      else
+        index=null;
+      if(index!=null)
+      {
+        if(stuff[index].point==0)
+        {
+          stuff[index].point++;
+          stuff[index].check=1;
+          sequence.push({start:time, n:proc[index]});
+          time+=stuff[index].rt[0];
+          if(stuff[index].rt[1]==0 && stuff[index].rt[2]==0)
+          {
+            complete++;
+            stuff[index].finish=1;
+            stuff[index].tat=time-stuff[index].at;
+            stuff[index].wt=time-stuff[index].at-stuff[index].bt1;
+          }
+          for(j=0;j<n;j++){
+            if(stuff[j].at<=time && stuff[j].finish==0 && stuff[j].check==0 && Q.indexOf(j)==-1)
+              Enqueue(j);
+            if(stuff[j].at<=time && stuff[j].check==1 && stuff[j].finish==0 && j!=index)
+            {
+              stuff[j].rt[1]-=stuff[index].rt[0];
+              if(stuff[j].rt[1]<=0)
+              {
+                stuff[j].check=0;
+                Enqueue(j);
+                stuff[j].point=2;
+              }
+            }
+          }
+
+        }
+        else if(stuff[index].point==2)
+        {
+          complete++;
+          stuff[index].finish=1;
+          sequence.push({start:time,n:proc[index]});
+          time+=stuff[index].rt[2];
+          stuff[index].tat=time-stuff[index].at;
+          stuff[index].wt=time-stuff[index].bt1-stuff[index].bt2-stuff[index].at;
+          for(j=0;j<n;j++){
+            if(stuff[j].at<=time && stuff[j].finish==0 && stuff[j].check==0 && Q.indexOf(j)==-1)
+              Enqueue(j);
+            if(stuff[j].at<=time && stuff[j].check==1 && stuff[j].finish==0 && j!=index)
+            {
+              stuff[j].rt[1]-=stuff[index].rt[2];
+              console.log(stuff[j].rt);
+              if(stuff[j].rt[1]<=0)
+              {
+                stuff[j].check=0;
+                Enqueue(j);
+                stuff[j].point=2;
+              }
+            }
+          }
+        }
+        temp=index;
+      }
+      else if(index==null)
+      {
+        if(temp!=index)
+        {
+          sequence.push({start:time, n: null});
+        }
+        time++;
+        for(j=0;j<n;j++){
+          if(stuff[j].at<=time && stuff[j].finish==0 && stuff[j].check==0 && Q.indexOf(j)==-1)
+            Enqueue(j);
+          if(stuff[j].at<=time && stuff[j].check==1 && stuff[j].finish==0 && j!=index)
+          {
+            stuff[j].rt[1]--;
+            if(stuff[j].rt[1]<=0)
+            {
+              stuff[j].check=0;
+              Enqueue(j);
+              stuff[j].point++;
+            }
+          }
+        }
+        temp=index;
+      }
+      console.log(Q);
+      console.log(complete);
+
+    }
+    sequence.push({start:time,n:-1});
+    console.log(sequence);
+    console.log(stuff);
+    total = sequence.length-1;
+    console.log(total);
+    var sum_at=0;
+    for(i=0;i<n;i++)
+      sum_at+=stuff[i].wt;
+    average_wt=sum_at/n;
+    var sum_tat=0;
+    for(i=0;i<n;i++)
+      sum_tat+=stuff[i].tat;
+    average_tat=sum_tat/n;
+    var pixel = 0;
+    var sum_null=0;
+    throughput=n/time;
+    for(i=0;i<sequence.length;i++)
+    {
+      if(sequence[i].n==null)
+      {
+        sum_null+=sequence[i+1].start-sequence[i].start;
+      }
+    }
+    cpu_efficiency=((time-sum_null)/time)*100;
+  }
+  function Enqueue(i){
+    Q.push(i);
+  }
+  function Dequeue(i){
+    return Q.shift();
+  }
+
+  function drawTable(i){
+    if(i<stuff.length){
+    var table = document.getElementById("ptable");
+    console.log(stuff[i].wt);
+    $("#ptable").append("<tr><td>"+stuff[i].no+"</td><td>"+stuff[i].at+"</td><td>"+stuff[i].bt1+"</td><td>"+stuff[i].wt+"</td><td>"+stuff[i].tat+"</td></tr>");
+    drawTable(i+1);
+  }
+  else
+  {
+    $("#Average").append("<b>The average waiting time of the given processes is "+average_wt+"</b><br>");
+    $("#Average").append("<b>The average turn around time of the given processes is "+average_tat+"</b><br>");
+    $("#Average").append("<b>The throughput of the given processes is "+throughput+"</b><br>");
+    $("#Average").append("<b>The CPU efficiency is "+cpu_efficiency+"%</b><br>");
+  }
+
+}
+
+  function displayBlock(i){
+    if(i == total){
+      document.getElementById("ptab").style.display='block';
+      drawTable(0);
+      return;
+    }
+
+    var blockWidth = (sequence[i+1].start - sequence[i].start)*pixel;
+    var processName = sequence[i].n;
+    if(sequence[i].n==null)
+    {
+      $('#outer-div').append('<div class="block" id="process-'+sequence[i].start +'">CPU Idle<div class="bottom">'+ sequence[i+1].start +'</div></div>');
+    }
+    else
+    {
+      $('#outer-div').append('<div class="block" id="process-'+sequence[i].start +'">P-'+ sequence[i].n +'<div class="bottom">'+ sequence[i+1].start +'</div></div>');
+    }
+    $('#process-'+sequence[i].start).css('width',blockWidth);
+
+    $('#process-'+sequence[i].start).fadeIn('slow',function(){
+      displayBlock(i+1);
+    });
+
+  }
+});
+</script>
+<style>
+body{
+  text-align: center;background-color: rgb(130, 28, 194);
+}
+th {
+    background-color:rgb(50, 50, 50);color: rgb(255, 255, 255);
+}
+#b{
+  font-size:2 em;
+}
+h1{
+  font-style: italic;
+}
+.btn{
+  border-radius:12px;background-color:rgb(150, 150, 150);color:white;
+}
+p{
+  font-size: 3 em;
+  font-style: italic;
+}
+
+#outer-div{
+  margin: auto;
+  width: 600px;
+  height: 100px;
+  position: relative;
+  border: 1px solid black;
+}
+
+.block{
+  position: relative;
+  display: none;
+  border-right: 1px solid black;
+  float: left;
+  text-align: center;
+  background-color: rgba(112, 128, 144, 0.44);
+  height: 98px;
+}
+#ptab{
+  display: none;
+}
+.bottom{
+ /* position: absolute;*/
+  width: 100%;
+  margin-top: 100px;
+  text-align: right;
+  margin-bottom: 1;
+}
+</style>
+<body>
+  <h1>First Come First Serve Scheduling</h1>
+  <br><br><br>
+  <div class="container">
+    <div class="container">
+      <div class="col-12 col-md-6">
+        <h3>Processes</h3>
+          <table id="ep" class="table table-bordered">
+            <thead>
+              <th>PNO.</th>
+              <th>Arrival Time </th>
+              <th>Burst Time 1 </th>
+            </thead>
+            <tbody id="ept">
+            </tbody>
+          </table>
+          <input type='number' min="0" id='at1' placeholder="arrival time"></input>
+          <input type='number' min="0" id='bt1' placeholder="burst time 1"></input>
+          <input type='hidden' min="0" id='io' value="0" placeholder="io time"></input>
+          <input type='hidden' min="0" id='bt2' value="0" placeholder="burst time 2"></input>
+          <button id="add" class="btn" onclick="AddtoList()">Add</button>
+          <br><br>
+        <button id="start" class="btn">Start</button>
+      </div>
+      <div class="col-12 col-md-6">
+        <h2>Gantt Chart</h2>
+        <div id="outer-div"></div>
+      </div>
+    </div>
+    <br><br><br>
+    <div class="container">
+      <div class="col-12 col-md-6">
+        <div class="panel-content">
+          <table id="ptab" class="table table-bordered" style="width :600px">
+            <thead>
+            <tr id="thead">
+            <th>PNO.</th>
+            <th>Arrival time</th>
+            <th>Burst time1</th>
+            <th>Waiting time</th>
+            <th>Turn Around Time</th>
+            </tr>
+            <tbody id="ptable">
+            </tbody>
+            </thead>
+          </table>
+        </div>
+      </div>
+      <div class="col-12 col-md-6" style="text-align: center;">
+        <p id="Average" align="center" style="background-color: rgb(150,150,150);"></p>
+      </div>
+    </div>
+  </div>
+    
+</body>
+</html>
