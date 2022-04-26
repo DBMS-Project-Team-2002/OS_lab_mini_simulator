@@ -64,6 +64,7 @@ Jumping to the proper location in the user program to restart that program<br></
         2.A smaller process has to wait for a large amount of time before a bigger process that has been allocated CPU finishes its execution.<br>
         3.Not suitable for time sharing systems where each user gets a share of CPU at regular intervals.<br>
         </p></p>
+        <button style="margin-bottom: 1.3rem;margin-left: 45%;"><a href="fcfs.html" target="_blank">Simulation</a></button>
     </div>
   </div>
   
@@ -76,6 +77,7 @@ Jumping to the proper location in the user program to restart that program<br></
       <p class="card-text"><h3 align="center">Demerits</h3>
         <p style="padding-left: 20px;padding-bottom: 10px;">1.It often cannot be implemented at the level of short-term CPU scheduling as there is no way to know the length of the next CPU burst.<br>
         2.The next CPU burst length is thereby approximated using statistical techniques like exponential average<br></p></p>
+        <button style="margin-bottom: 1.3rem;margin-left: 45%;"><a href="sjf.html" target="_blank">Simulation</a></button>
     </div>
   </div>
 
@@ -83,6 +85,7 @@ Jumping to the proper location in the user program to restart that program<br></
     <div class="card-body">
       <h2 class="card-title" align="center" style="padding-top: 10px;">Shortest Remaining Time First</h2>
       <h4 class="card-subtitle mb-2" align="center" style="padding-bottom: 10px;">This is the preemptive version of Shortest Job First scheduling. A newly arrived process in the ready queue <br>may have a burst time lesser than that of the current process getting executed. In such a case, the current process is preempted <br>and the newly arrived process is scheduled to execute. Similar to SJF, FCFS is used to resolve the tie here.</h4>
+      <button style="margin-bottom: 1.3rem;margin-left: 45%;"><a href="srtf.html" target="_blank">Simulation</a></button>
     </div>
   </div>
 
@@ -95,6 +98,7 @@ Jumping to the proper location in the user program to restart that program<br></
       <p class="card-text"><h3 align="center">Demerits</h3>
         <p style="padding-left: 20px;padding-bottom: 10px;">1.The disadvantage with this algorithm is the total execution time of the process must be known before the  execution.<br>
           There is a chance for starvation of processes which have lesser execution time  when the longer processes are continually added.<br></p></p>
+          <button style="margin-bottom: 1.3rem;margin-left: 45%;"><a href="ltf.html" target="_blank">Simulation</a></button>
     </div>
   </div>
 
@@ -102,6 +106,7 @@ Jumping to the proper location in the user program to restart that program<br></
     <div class="card-body">
       <h2 class="card-title" align="center" style="padding-top: 10px;">Largest Remaining Time First Algorithm</h2>
       <h4 class="card-subtitle mb-2" align="center" style="padding-bottom: 10px;">It is the preemptive version of the Largest job first scheduling.</h4>
+      <button style="margin-bottom: 1.3rem;margin-left: 45%;"><a href="lrtf.html" target="_blank">Simulation</a></button>
     </div>
   </div>
 
@@ -109,6 +114,7 @@ Jumping to the proper location in the user program to restart that program<br></
     <div class="card-body">
       <h2 class="card-title" align="center" style="padding-top: 10px;">Non-preemptive priority scheduling</h2>
       <h4 class="card-subtitle mb-2" align="center" style="padding-bottom: 10px;">A more general case of the SJF scheduling where the priority was based on burst time. Each process is associated with a priority and CPU is allocated to the process with highest priority. Equal priority processes are scheduled in FCFS order. A newly arrived process is simply put in the ready queue based on its priority and does not interrupt the currently executing process.</h4>
+      <button style="margin-bottom: 1.3rem;margin-left: 45%;"><a href="prioritynonpre.html" target="_blank">Simulation</a></button>
     </div>
   </div>
 
@@ -116,6 +122,7 @@ Jumping to the proper location in the user program to restart that program<br></
     <div class="card-body">
       <h2 class="card-title" align="center" style="padding-top: 10px;">Preemptive priority scheduling</h2>
       <h4 class="card-subtitle mb-2" align="center" style="padding-bottom: 10px;">It is a preemptive version of the priority scheduling algorithm. The priority of newly arrived processes are compared <br>with the currently executing process. If the priority is higher, then the currently executing process is preempted and the <br>newly arrived process executes</h4>
+      <button style="margin-bottom: 1.3rem;margin-left: 45%;"><a href="priority.html" target="_blank">Simulation</a></button>
     </div>
   </div>
 
@@ -127,6 +134,7 @@ Jumping to the proper location in the user program to restart that program<br></
       <p class="card-text"><h3 align="center">Performance</h3>
         <p style="padding-left: 20px;padding-bottom: 10px;">1.Performance depends heavily on the time quantum. A very large time quantum will it make it effectively an FCFS algorithms and a very short time quantum will force a very large number of context switches.<br>
           2.A rule of thumb is that 80% of the CPU bursts must be shorter than the time quantum.<br></p></p>
+          <button style="margin-bottom: 1.3rem;margin-left: 45%;"><a href="round-robin.html" target="_blank">Simulation</a></button>
     </div>
   </div>
 
@@ -138,11 +146,9 @@ Jumping to the proper location in the user program to restart that program<br></
         3.Response ratio = (Waiting time so far + Burst Time)/Burst time.<br>
         4.Shortest processes are favoured.
         As the waiting time increases, the response ratio increases and the longer jobs can get past short jobs.<br></p>
+        <button style="margin-bottom: 1.3rem;margin-left: 45%;"><a href="hrrn.html" target="_blank">Simulation</a></button>
     </div>
   </div>
-
-
 </div>
-
 </body>
 </html>
